@@ -3,7 +3,7 @@ import manipulaBD
 conexao = manipulaBD.criaConexaoBD('localhost','root','root','bd')
 cursor = conexao.cursor()
 
-def insereCliente(nome, cpf, email, telefone, endereco): # INSERE UMA ENTRADA NA TABELA CLIENTE
+def insereCliente(nome, cpf, email, telefone): # INSERE UMA ENTRADA NA TABELA CLIENTE
     
     comando = f'INSERT INTO cliente (nome_cliente, cpf_cliente, email_cliente, telefone_cliente) VALUES ("{nome}", "{cpf}", "{email}", "{telefone}")'
     cursor.execute(comando)
@@ -87,13 +87,51 @@ def consultaClienteId(id): #CONSULTA E RETORNA UM CLIENTE PELA ID
     resultados = manipulaBD.leConsulta(conexao, consulta)
     return resultados
 
+def cadastrarUsuario():
+
+    nome = input("Digite o nome do usuario:")
+    cpf = input("Informe o cpf do cliente:")
+    email = input("Informe o email do cliente:")
+    telefone = input("Informe o telefone do cliente:")
+    insereCliente(nome,cpf,email,telefone)
+    print("Cliente cadastrado com sucesso!")
+
+
+
+
+
 appInit = True # INICIO DA APLICAÇÃO
 while(appInit):
 
     print("Selecione uma das opções: ")
-    print("1 - Cadastrar Usuario")
-    print("2 - Pesquisar Usuario")
+    print("1 - Cadastrar Cliente")
+    print("2 - Pesquisar Cliente")
+    print("3 - Sair")
 
     opcao = input("Digite o numero correspondente")
 
-    if(opcao == 1)
+    if opcao == "1":
+        cadastrarUsuario()
+
+    elif opcao == "2":
+
+        print("1 - Pesquisar por nome")
+        print("2 - Pesquisar por código")
+
+        escolhaBusca = input("Digite a opção desejada:")
+
+        if escolhaBusca == "1":
+            nomeBusca = input("Digite o nome do cliente que deseja buscar: ")
+            print(consultaClienteNome(nomeBusca))
+        elif escolhaBusca == "2":
+            idBusca = input("Digite a id do cliente que deseja buscar: ")
+            print(consultaClienteId(idBusca))
+        else:
+            print('Opção inválida')
+        
+    elif opcao == "3":
+        appInit = False
+        print("adiós")
+    
+    else:
+        print("Opcao Inválida!")
