@@ -1,6 +1,6 @@
 import manipulaBD
 
-conexao = manipulaBD.criaConexaoBD('localhost','root','root','bd')
+conexao = manipulaBD.criaConexaoBD('localhost','kaueVB','kaueVB','sys')
 cursor = conexao.cursor()
 
 def insereCliente(nome, cpf, email, telefone): # INSERE UMA ENTRADA NA TABELA CLIENTE
@@ -104,13 +104,17 @@ appInit = True # INICIO DA APLICAÇÃO
 while(appInit):
 
     print("Selecione uma das opções: ")
+    print("0 - Criar estrutura")
     print("1 - Cadastrar Cliente")
     print("2 - Pesquisar Cliente")
     print("3 - Sair")
 
     opcao = input("Digite o numero correspondente")
 
-    if opcao == "1":
+    if opcao == "0":
+        manipulaBD.criarTabela(conexao)
+
+    elif opcao == "1":
         cadastrarUsuario()
 
     elif opcao == "2":
