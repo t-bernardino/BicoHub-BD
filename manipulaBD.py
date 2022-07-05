@@ -1,6 +1,6 @@
 import mysql.connector
 
-def criaConexaoBD(host_name, user_name, user_password, db_name):
+def criaConexaoBD(host_name, user_name, user_password, db_name): #ABRE CONEXÃO COM O BANCO
     connection = None
     try:
         connection = mysql.connector.connect(
@@ -15,7 +15,7 @@ def criaConexaoBD(host_name, user_name, user_password, db_name):
 
     return connection
 
-def executaConsulta(connection, query):
+def executaConsulta(connection, query): # EXECUTA UMA CONSULTA. UTILIZADO APENAS PARA ALTERAÇÕES DIRETAS COM O BANCO
     cursor = connection.cursor()
     try:
         cursor.execute(query)
@@ -24,14 +24,14 @@ def executaConsulta(connection, query):
     except Error as err:
         print(f"Error: '{err}'")
 
-def leConsulta(connection, query):
+def leConsulta(connection, query): # FAZ UMA CONSULTA E RETORNA O RESULTADO DA MESMA
     cursor = connection.cursor()
-    result = None
+    resultado = None
     try:
         cursor.execute(query)
-        result = cursor.fetchall()
-        return result
+        resultado = cursor.fetchall()
+        return resultado
     except Error as err:
         print(f"Error: '{err}'")
 
-print("Olá!")
+
