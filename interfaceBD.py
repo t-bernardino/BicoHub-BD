@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import Toplevel, ttk
+from BicoHub import insereCliente
 
 class InterfaceGrafica():
 
@@ -15,12 +16,13 @@ class InterfaceGrafica():
         mensagemCriado.place(x=200,y=100)
         
         
+        
         botaoSair = tk.Button(master=frameJanelaEstrutura,text="VOLTAR",command=janelaEstrutura.destroy)
         botaoSair.place(x=200,y=150)
         frameJanelaEstrutura.pack()
 
 
-    """
+    """3
     def criaLayoutPesquisa(janela,opcao):
 
         match opcao:
@@ -104,6 +106,23 @@ class InterfaceGrafica():
         frameJanelaResultado = tk.Frame(master=janelaResultado, width=600, height=600, background="white")
 
         
+    def recolheDadosCliente(janela, nome, cpf, email, telefone):
+
+        nomeCliente = nome.get(1.0,"end-1c")
+        cpfCliente = cpf.get(1.0,"end-1c")
+        emailCliente = email.get(1.0,"end-1c")
+        telefoneCliente = telefone.get(1.0,"end-1c")
+
+        insereCliente(nomeCliente,cpfCliente,emailCliente,telefoneCliente)
+
+        janelaConfirmacao = tk.Toplevel(janela)
+        labelConfirmacao = tk.Label(janelaConfirmacao, text = "CADASTRO REALIZADO COM SUCESSO")
+        botaoSair = tk.Button(janelaConfirmacao,text="VOLTAR",command= janelaConfirmacao.destroy)
+        labelConfirmacao.pack()
+        botaoSair.pack()
+
+        
+    
     
     def criaJanelaPesquisa(janela):
         
@@ -139,40 +158,40 @@ class InterfaceGrafica():
 
         #ELEMENTOS DA ABA CLIENTE
 
-        rotuloCPF = tk.Label(abaCliente,text="CPF")
-        rotuloCPF.place(x=20,y=25)
-        campoCPF = tk.Text(master=abaCliente, height=1,width=60)
-        campoCPF.place(x=100,y=25)
+        rotuloCPFCliente = tk.Label(abaCliente,text="CPF")
+        rotuloCPFCliente.place(x=20,y=25)
+        campoCPFCliente = tk.Text(master=abaCliente, height=1,width=60)
+        campoCPFCliente.place(x=100,y=25)
                 
-        rotuloNome = tk.Label(abaCliente,text="Nome:")
-        rotuloNome.place(x=20,y=55)
-        campoNome = tk.Text(master=abaCliente,height=1,width=60)
-        campoNome.place(x=100,y=55)
+        rotuloNomeCliente = tk.Label(abaCliente,text="Nome:")
+        rotuloNomeCliente.place(x=20,y=55)
+        campoNomeCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoNomeCliente.place(x=100,y=55)
 
-        rotuloEmail = tk.Label(abaCliente,text="E-mail:")
-        rotuloEmail.place(x=20,y=85)
-        campoEmail = tk.Text(master=abaCliente,height=1,width=60)
-        campoEmail.place(x=100,y=85)
+        rotuloEmailCliente = tk.Label(abaCliente,text="E-mail:")
+        rotuloEmailCliente.place(x=20,y=85)
+        campoEmailCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoEmailCliente.place(x=100,y=85)
 
-        rotuloTelefone = tk.Label(abaCliente,text="Telefone:")
-        rotuloTelefone.place(x=20,y=115)
-        campoTelefone = tk.Text(master=abaCliente,height=1,width=60)
-        campoTelefone.place(x=100,y=115)
+        rotuloTelefoneCliente = tk.Label(abaCliente,text="Telefone:")
+        rotuloTelefoneCliente.place(x=20,y=115)
+        campoTelefoneCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoTelefoneCliente.place(x=100,y=115)
 
-        rotuloRua = tk.Label(abaCliente,text="Rua")
-        rotuloRua.place(x=20,y=145)
-        campoRua = tk.Text(master=abaCliente, height=1,width=60)
-        campoRua.place(x=100,y=145)
+        rotuloRuaCliente = tk.Label(abaCliente,text="Rua")
+        rotuloRuaCliente.place(x=20,y=145)
+        campoRuaCliente = tk.Text(master=abaCliente, height=1,width=60)
+        campoRuaCliente.place(x=100,y=145)
                 
-        rotuloNumero = tk.Label(abaCliente,text="Numero:")
-        rotuloNumero.place(x=20,y=175)
-        campoNumero = tk.Text(master=abaCliente,height=1,width=60)
-        campoNumero.place(x=100,y=175)
+        rotuloNumeroCliente = tk.Label(abaCliente,text="Numero:")
+        rotuloNumeroCliente.place(x=20,y=175)
+        campoNumeroCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoNumeroCliente.place(x=100,y=175)
 
-        rotuloCEP = tk.Label(abaCliente,text="CEP:")
-        rotuloCEP.place(x=20,y=205)
-        campoCEP = tk.Text(master=abaCliente,height=1,width=60)
-        campoCEP.place(x=100,y=205)
+        rotuloCEPCliente = tk.Label(abaCliente,text="CEP:")
+        rotuloCEPCliente.place(x=20,y=205)
+        campoCEPCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoCEPCliente.place(x=100,y=205)
 
         botaoPesquisar = tk.Button(master=abaCliente,text="PESQUISAR")
         botaoPesquisar.place(x=200,y=235)
@@ -182,43 +201,43 @@ class InterfaceGrafica():
 
         #ELEMENTOS DA ABA PROFISSIONAL
 
-        rotuloCPF = tk.Label(abaProfissional,text="CPF")
-        rotuloCPF.place(x=20,y=25)
-        campoCPF = tk.Text(master=abaProfissional, height=1,width=60)
-        campoCPF.place(x=100,y=25)
+        rotuloCPFProfissional = tk.Label(abaProfissional,text="CPF")
+        rotuloCPFProfissional.place(x=20,y=25)
+        campoCPFProfissional = tk.Text(master=abaProfissional, height=1,width=60)
+        campoCPFProfissional.place(x=100,y=25)
                 
-        rotuloNome = tk.Label(abaProfissional,text="Nome:")
-        rotuloNome.place(x=20,y=55)
-        campoNome = tk.Text(master=abaProfissional,height=1,width=60)
-        campoNome.place(x=100,y=55)
+        rotuloNomeProfissional = tk.Label(abaProfissional,text="Nome:")
+        rotuloNomeProfissional.place(x=20,y=55)
+        campoNomeProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoNomeProfissional.place(x=100,y=55)
 
-        rotuloEmail = tk.Label(abaProfissional,text="E-mail:")
-        rotuloEmail.place(x=20,y=85)
-        campoEmail = tk.Text(master=abaProfissional,height=1,width=60)
-        campoEmail.place(x=100,y=85)
+        rotuloEmailProfissional = tk.Label(abaProfissional,text="E-mail:")
+        rotuloEmailProfissional.place(x=20,y=85)
+        campoEmailProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoEmailProfissional.place(x=100,y=85)
 
-        rotuloTelefone = tk.Label(abaProfissional,text="Telefone:")
-        rotuloTelefone.place(x=20,y=115)
-        campoTelefone = tk.Text(master=abaProfissional,height=1,width=60)
-        campoTelefone.place(x=100,y=115)
+        rotuloTelefoneProfissional = tk.Label(abaProfissional,text="Telefone:")
+        rotuloTelefoneProfissional.place(x=20,y=115)
+        campoTelefoneProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoTelefoneProfissional.place(x=100,y=115)
 
-        rotuloRua = tk.Label(abaProfissional,text="Rua")
-        rotuloRua.place(x=20,y=145)
-        campoRua = tk.Text(master=abaProfissional, height=1,width=60)
-        campoRua.place(x=100,y=145)
+        rotuloRuaProfissional = tk.Label(abaProfissional,text="Rua")
+        rotuloRuaProfissional.place(x=20,y=145)
+        campoRuaProfissional = tk.Text(master=abaProfissional, height=1,width=60)
+        campoRuaProfissional.place(x=100,y=145)
                 
-        rotuloNumero = tk.Label(abaProfissional,text="Numero:")
-        rotuloNumero.place(x=20,y=175)
-        campoNumero = tk.Text(master=abaProfissional,height=1,width=60)
-        campoNumero.place(x=100,y=175)
+        rotuloNumeroProfissional = tk.Label(abaProfissional,text="Numero:")
+        rotuloNumeroProfissional.place(x=20,y=175)
+        campoNumeroProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoNumeroProfissional.place(x=100,y=175)
 
-        rotuloCEP = tk.Label(abaProfissional,text="CEP:")
-        rotuloCEP.place(x=20,y=205)
-        campoCEP = tk.Text(master=abaProfissional,height=1,width=60)
-        campoCEP.place(x=100,y=205)
+        rotuloCEPProfissional = tk.Label(abaProfissional,text="CEP:")
+        rotuloCEPProfissional.place(x=20,y=205)
+        campoCEPProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoCEPProfissional.place(x=100,y=205)
 
-        botaoPesquisar = tk.Button(master=abaProfissional,text="PESQUISAR")
-        botaoPesquisar.place(x=200,y=235)
+        botaoPesquisarProfissional = tk.Button(master=abaProfissional,text="PESQUISAR")
+        botaoPesquisarProfissional.place(x=200,y=235)
 
         botaoVoltar = tk.Button(master=abaProfissional,text="VOLTAR",command=janelaPesquisa.destroy)
         botaoVoltar.place(x=350,y=235)
@@ -240,8 +259,8 @@ class InterfaceGrafica():
         campoDescricaoJob = tk.Text(master=abaJob,height=1,width=60)
         campoDescricaoJob.place(x=100,y=85)
 
-        botaoPesquisar = tk.Button(master=abaJob,text="PESQUISAR")
-        botaoPesquisar.place(x=200,y=115)
+        botaoPesquisarJob = tk.Button(master=abaJob,text="PESQUISAR")
+        botaoPesquisarJob.place(x=200,y=115)
 
         botaoVoltar = tk.Button(master=abaJob,text="VOLTAR",command=janelaPesquisa.destroy)
         botaoVoltar.place(x=350,y=115)
@@ -265,86 +284,86 @@ class InterfaceGrafica():
 
         #ELEMENTOS DA ABA CLIENTE
 
-        rotuloCPF = tk.Label(abaCliente,text="CPF")
-        rotuloCPF.place(x=20,y=25)
-        campoCPF = tk.Text(master=abaCliente, height=1,width=60)
-        campoCPF.place(x=100,y=25)
+        rotuloCPFCliente = tk.Label(abaCliente,text="CPF")
+        rotuloCPFCliente.place(x=20,y=25)
+        campoCPFCliente = tk.Text(master=abaCliente, height=1,width=60)
+        campoCPFCliente.place(x=100,y=25)
                 
-        rotuloNome = tk.Label(abaCliente,text="Nome:")
-        rotuloNome.place(x=20,y=55)
-        campoNome = tk.Text(master=abaCliente,height=1,width=60)
-        campoNome.place(x=100,y=55)
+        rotuloNomeCliente = tk.Label(abaCliente,text="Nome:")
+        rotuloNomeCliente.place(x=20,y=55)
+        campoNomeCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoNomeCliente.place(x=100,y=55)
 
-        rotuloEmail = tk.Label(abaCliente,text="E-mail:")
-        rotuloEmail.place(x=20,y=85)
-        campoEmail = tk.Text(master=abaCliente,height=1,width=60)
-        campoEmail.place(x=100,y=85)
+        rotuloEmailCliente = tk.Label(abaCliente,text="E-mail:")
+        rotuloEmailCliente.place(x=20,y=85)
+        campoEmailCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoEmailCliente.place(x=100,y=85)
 
-        rotuloTelefone = tk.Label(abaCliente,text="Telefone:")
-        rotuloTelefone.place(x=20,y=115)
-        campoTelefone = tk.Text(master=abaCliente,height=1,width=60)
-        campoTelefone.place(x=100,y=115)
+        rotuloTelefoneCliente = tk.Label(abaCliente,text="Telefone:")
+        rotuloTelefoneCliente.place(x=20,y=115)
+        campoTelefoneCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoTelefoneCliente.place(x=100,y=115)
 
-        rotuloRua = tk.Label(abaCliente,text="Rua")
-        rotuloRua.place(x=20,y=145)
-        campoRua = tk.Text(master=abaCliente, height=1,width=60)
-        campoRua.place(x=100,y=145)
+        rotuloRuaCliente = tk.Label(abaCliente,text="Rua")
+        rotuloRuaCliente.place(x=20,y=145)
+        campoRuaCliente = tk.Text(master=abaCliente, height=1,width=60)
+        campoRuaCliente.place(x=100,y=145)
                 
-        rotuloNumero = tk.Label(abaCliente,text="Numero:")
-        rotuloNumero.place(x=20,y=175)
-        campoNumero = tk.Text(master=abaCliente,height=1,width=60)
-        campoNumero.place(x=100,y=175)
+        rotuloNumeroCliente = tk.Label(abaCliente,text="Numero:")
+        rotuloNumeroCliente.place(x=20,y=175)
+        campoNumeroCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoNumeroCliente.place(x=100,y=175)
 
-        rotuloCEP = tk.Label(abaCliente,text="CEP:")
-        rotuloCEP.place(x=20,y=205)
-        campoCEP = tk.Text(master=abaCliente,height=1,width=60)
-        campoCEP.place(x=100,y=205)
+        rotuloCEPCliente = tk.Label(abaCliente,text="CEP:")
+        rotuloCEPCliente.place(x=20,y=205)
+        campoCEPCliente = tk.Text(master=abaCliente,height=1,width=60)
+        campoCEPCliente.place(x=100,y=205)
 
-        botaoPesquisar = tk.Button(master=abaCliente,text="CADASTRAR")
-        botaoPesquisar.place(x=200,y=235)
+        botaoInserirCliente = tk.Button(master=abaCliente,text="CADASTRAR", command=lambda: InterfaceGrafica.recolheDadosCliente(janela=janelaInsercao,nome=campoNomeCliente,cpf=campoCPFCliente,email=campoEmailCliente,telefone=campoTelefoneCliente))
+        botaoInserirCliente.place(x=200,y=235)
 
         botaoVoltar = tk.Button(master=abaCliente,text="VOLTAR",command=janelaInsercao.destroy)
         botaoVoltar.place(x=350,y=235)
 
         #ELEMENTOS DA ABA PROFISSIONAL
 
-        rotuloCPF = tk.Label(abaProfissional,text="CPF")
-        rotuloCPF.place(x=20,y=25)
-        campoCPF = tk.Text(master=abaProfissional, height=1,width=60)
-        campoCPF.place(x=100,y=25)
+        rotuloCPFProfissional = tk.Label(abaProfissional,text="CPF")
+        rotuloCPFProfissional.place(x=20,y=25)
+        campoCPFProfissional = tk.Text(master=abaProfissional, height=1,width=60)
+        campoCPFProfissional.place(x=100,y=25)
                 
-        rotuloNome = tk.Label(abaProfissional,text="Nome:")
-        rotuloNome.place(x=20,y=55)
-        campoNome = tk.Text(master=abaProfissional,height=1,width=60)
-        campoNome.place(x=100,y=55)
+        rotuloNomeProfissional = tk.Label(abaProfissional,text="Nome:")
+        rotuloNomeProfissional.place(x=20,y=55)
+        campoNomeProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoNomeProfissional.place(x=100,y=55)
 
-        rotuloEmail = tk.Label(abaProfissional,text="E-mail:")
-        rotuloEmail.place(x=20,y=85)
-        campoEmail = tk.Text(master=abaProfissional,height=1,width=60)
-        campoEmail.place(x=100,y=85)
+        rotuloEmailProfissional = tk.Label(abaProfissional,text="E-mail:")
+        rotuloEmailProfissional.place(x=20,y=85)
+        campoEmailProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoEmailProfissional.place(x=100,y=85)
 
-        rotuloTelefone = tk.Label(abaProfissional,text="Telefone:")
-        rotuloTelefone.place(x=20,y=115)
-        campoTelefone = tk.Text(master=abaProfissional,height=1,width=60)
-        campoTelefone.place(x=100,y=115)
+        rotuloTelefoneProfissional = tk.Label(abaProfissional,text="Telefone:")
+        rotuloTelefoneProfissional.place(x=20,y=115)
+        campoTelefoneProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoTelefoneProfissional.place(x=100,y=115)
 
-        rotuloRua = tk.Label(abaProfissional,text="Rua")
-        rotuloRua.place(x=20,y=145)
-        campoRua = tk.Text(master=abaProfissional, height=1,width=60)
-        campoRua.place(x=100,y=145)
+        rotuloRuaProfissional = tk.Label(abaProfissional,text="Rua")
+        rotuloRuaProfissional.place(x=20,y=145)
+        campoRuaProfissional = tk.Text(master=abaProfissional, height=1,width=60)
+        campoRuaProfissional.place(x=100,y=145)
                 
-        rotuloNumero = tk.Label(abaProfissional,text="Numero:")
-        rotuloNumero.place(x=20,y=175)
-        campoNumero = tk.Text(master=abaProfissional,height=1,width=60)
-        campoNumero.place(x=100,y=175)
+        rotuloNumeroProfissional = tk.Label(abaProfissional,text="Numero:")
+        rotuloNumeroProfissional.place(x=20,y=175)
+        campoNumeroProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoNumeroProfissional.place(x=100,y=175)
 
-        rotuloCEP = tk.Label(abaProfissional,text="CEP:")
-        rotuloCEP.place(x=20,y=205)
-        campoCEP = tk.Text(master=abaProfissional,height=1,width=60)
-        campoCEP.place(x=100,y=205)
+        rotuloCEPProfissional = tk.Label(abaProfissional,text="CEP:")
+        rotuloCEPProfissional.place(x=20,y=205)
+        campoCEPProfissional = tk.Text(master=abaProfissional,height=1,width=60)
+        campoCEPProfissional.place(x=100,y=205)
 
-        botaoPesquisar = tk.Button(master=abaProfissional,text="CADASTRAR")
-        botaoPesquisar.place(x=200,y=235)
+        botaoInserirProf = tk.Button(master=abaProfissional,text="CADASTRAR")
+        botaoInserirProf.place(x=200,y=235)
 
         botaoVoltar = tk.Button(master=abaProfissional,text="VOLTAR",command=janelaInsercao.destroy)
         botaoVoltar.place(x=350,y=235)
@@ -366,8 +385,8 @@ class InterfaceGrafica():
         campoDescricaoJob = tk.Text(master=abaJob,height=1,width=60)
         campoDescricaoJob.place(x=100,y=85)
 
-        botaoPesquisar = tk.Button(master=abaJob,text="CADASTRAR")
-        botaoPesquisar.place(x=200,y=115)
+        botaoInserirJob = tk.Button(master=abaJob,text="CADASTRAR")
+        botaoInserirJob.place(x=200,y=115)
 
         botaoVoltar = tk.Button(master=abaJob,text="VOLTAR",command=janelaInsercao.destroy)
         botaoVoltar.place(x=350,y=115)

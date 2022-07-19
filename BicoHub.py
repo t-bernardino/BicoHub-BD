@@ -1,6 +1,11 @@
-import manipulaBD
+from manipulaBD import ConectorSQL
 
-conexao = manipulaBD.criaConexaoBD('localhost','kaueVB','kaueVB','sys')
+hostDB = 'localhost'
+usuarioDB = 'root'
+senhaDB = 'root'
+nomeDB = 'bd'
+
+conexao = ConectorSQL.criaConexaoBD(hostDB,usuarioDB,senhaDB,nomeDB)
 cursor = conexao.cursor()
 
 def insereCliente(nome, cpf, email, telefone): # INSERE UMA ENTRADA NA TABELA CLIENTE
@@ -96,10 +101,10 @@ def cadastrarUsuario():
     insereCliente(nome,cpf,email,telefone)
     print("Cliente cadastrado com sucesso!")
 
+ConectorSQL.criarTabela(conexao)
 
 
-
-
+"""
 appInit = True # INICIO DA APLICAÇÃO
 while(appInit):
 
@@ -139,3 +144,4 @@ while(appInit):
     
     else:
         print("Opcao Inválida!")
+        """
