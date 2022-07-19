@@ -31,7 +31,7 @@ def insereJob(cliente, titulo, descricao): # INSERE UMA ENTRADA NA TABELA JOB
 
 
 
-def insereProfissional(cpf, nome, email, telefone, endereco): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
+def insereProfissional(cpf, nome, email, telefone): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
     
     comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}", "{endereco}")'
     cursor.execute(comando)

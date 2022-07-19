@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Toplevel, ttk
-from BicoHub import insereCliente
+from BicoHub import *
 
 class InterfaceGrafica():
 
@@ -15,7 +15,7 @@ class InterfaceGrafica():
         mensagemCriado = tk.Label(master=frameJanelaEstrutura,text="ESTRUTURA CRIADA COM SUCESSO")
         mensagemCriado.place(x=200,y=100)
         
-        
+
         
         botaoSair = tk.Button(master=frameJanelaEstrutura,text="VOLTAR",command=janelaEstrutura.destroy)
         botaoSair.place(x=200,y=150)
@@ -121,7 +121,32 @@ class InterfaceGrafica():
         labelConfirmacao.pack()
         botaoSair.pack()
 
+    def recolheDadosProfissional(janela, nome, cpf, email, telefone):
+        nomeProfissional = nome.get(1.0,"end-1c")
+        cpfProfissional = cpf.get(1.0,"end-1c")
+        emailProfissional = email.get(1.0,"end-1c")
+        telefoneProfissional = telefone.get(1.0,"end-1c")
+
+        insereProfissional(nomeProfissional,cpfProfissional,emailProfissional,telefoneProfissional)
+
+        janelaConfirmacao = tk.Toplevel(janela)
+        labelConfirmacao = tk.Label(janelaConfirmacao, text = "CADASTRO REALIZADO COM SUCESSO")
+        botaoSair = tk.Button(janelaConfirmacao,text="VOLTAR",command= janelaConfirmacao.destroy)
+        labelConfirmacao.pack()
+        botaoSair.pack()
         
+    def recolheDadosJob(janela, cliente, titulo, descricao):
+        clienteJob = cliente.get(1.0,"end-1c")
+        tituloJob = titulo.get(1.0,"end-1c")
+        descricaoJob = descricao.get(1.0,"end-1c")
+
+        insereJob(clienteJob,tituloJob,descricaoJob)
+
+        janelaConfirmacao = tk.Toplevel(janela)
+        labelConfirmacao = tk.Label(janelaConfirmacao, text = "CADASTRO REALIZADO COM SUCESSO")
+        botaoSair = tk.Button(janelaConfirmacao,text="VOLTAR",command= janelaConfirmacao.destroy)
+        labelConfirmacao.pack()
+        botaoSair.pack()
     
     
     def criaJanelaPesquisa(janela):
@@ -362,7 +387,7 @@ class InterfaceGrafica():
         campoCEPProfissional = tk.Text(master=abaProfissional,height=1,width=60)
         campoCEPProfissional.place(x=100,y=205)
 
-        botaoInserirProf = tk.Button(master=abaProfissional,text="CADASTRAR")
+        botaoInserirProf = tk.Button(master=abaProfissional,text="CADASTRAR", command=lambda: InterfaceGrafica.recolheDadosProfissional(janela=janelaInsercao,nome=campoNomeProfissional,cpf=campoCPFProfissional,email=campoEmailProfissional,telefone=campoTelefoneProfissional))
         botaoInserirProf.place(x=200,y=235)
 
         botaoVoltar = tk.Button(master=abaProfissional,text="VOLTAR",command=janelaInsercao.destroy)
@@ -385,7 +410,7 @@ class InterfaceGrafica():
         campoDescricaoJob = tk.Text(master=abaJob,height=1,width=60)
         campoDescricaoJob.place(x=100,y=85)
 
-        botaoInserirJob = tk.Button(master=abaJob,text="CADASTRAR")
+        botaoInserirJob = tk.Button(master=abaJob,text="CADASTRAR", command= lambda: InterfaceGrafica.recolheDadosJob(janela=janelaInsercao,cliente=campoClienteJob,titulo=campoTituloJob,descricao=campoDescricaoJob))
         botaoInserirJob.place(x=200,y=115)
 
         botaoVoltar = tk.Button(master=abaJob,text="VOLTAR",command=janelaInsercao.destroy)
