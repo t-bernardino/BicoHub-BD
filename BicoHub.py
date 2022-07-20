@@ -209,7 +209,7 @@ while(appInit):
     opcao = input("Digite o numero correspondente")
 
     if opcao == "0":
-        manipulaBD.criarTabela(conexao)
+        ConectorSQL.criarTabela(conexao)
 
     elif opcao == "1":
         print("1 - Cadastrar cliente")
@@ -234,7 +234,7 @@ while(appInit):
             print(consultaClienteNome(nomeBusca))
         elif escolhaBusca == "2":
             idBusca = input("Digite a id do cliente que deseja buscar: ")
-            print(consultaClienteId(idBusca))
+            print(consultaClienteCodigo(idBusca))
         else:
             print('Opção inválida')
         
