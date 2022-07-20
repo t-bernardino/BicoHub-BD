@@ -26,9 +26,9 @@ def insereJob(cliente, titulo, descricao): # INSERE UMA ENTRADA NA TABELA JOB
 
 
 
-def insereProfissional(cpf, nome, email, telefone): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
+def insereProfissional(cpf, nome, email, telefone, id_endereco): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
     
-    comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}")'
+    comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}", "{id_endereco}")'
     cursor.execute(comando)
     conexao.commit()
 
@@ -152,7 +152,9 @@ def pesquisaProfissionalTag(servico):
 
 def selecionaEndereco(rua,numero,complemento,cep):
 
-    query = "SELECT id_endereco FROM endereco WHERE rua='"+{rua}+"' and numero="+{numero}+" and complemento="+{complemento}+" and cep="+{cep}
+    numeroConv = str(numero)
+
+    query = "SELECT id_endereco FROM endereço WHERE rua='"+{rua}+"' and numero={numero} and complemento='"+{complemento}+"' and cep='"+{cep}+"'"
     return consulta(query)
 
 """
@@ -170,7 +172,7 @@ def cadastrarUsuario():
     email = input("Informe o email do cliente:")
     telefone = input("Informe o telefone do cliente:")
     insereCliente(nome,cpf,email,telefone)
-    rua = input("Digite o numero da rua: \n")
+    rua = input("Digite o nome da rua: \n")
     numero = input("Insira o numero: \n")
     complemento = input("Insira o complemento: \n")
     cep = input("Insira o cep: \n")
@@ -184,12 +186,13 @@ def cadastrarPrestador():
     nome = input("Digite o nome do profissional: \n ")
     email = input("Digite o email do profissional: \n")
     telefone = input("Digite o telefone do profissional: \n")
-    insereProfissional(cpf, nome, email, telefone)
-    rua = input("Digite o numero da rua: \n")
+    rua = input("Digite o nome da rua: \n")
     numero = input("Insira o numero: \n")
     complemento = input("Insira o complemento: \n")
     cep = input("Insira o cep: \n")
     insereEndereco(rua, numero, complemento, cep)
+    id_endereco = selecionaEndereco(rua, numero, complemento, cep)
+    insereProfissional(cpf, nome, email, telefone, id_endereco)
     print("Profissional cadastrado com sucesso!")
 
 
@@ -251,7 +254,7 @@ while(appInit):
             elif escolhaBusca == "4":
                 idNomeBusca = input("Digite o nome do Cliente que deseja buscar o ID: \n")
                 print(idNomeBusca(retornaIdCliente))
-            elif escolhaBusca == "5"
+            elif escolhaBusca == "5":
                 jobBusca = input("Digite o nome do cliente para o qual o job está relacionado: \n")
                 print(jobBusca(mostraJobsClientes))
             else:
@@ -265,20 +268,20 @@ while(appInit):
                 
                 escolhaBuscaProf = input("Digite a opção desejada:\n")
                 
-                if escolhaBuscaProf == "1"
+                if escolhaBuscaProf == "1":
                     nomeBuscaProf = input("Digite o nome do profissional que deseja buscar: \n")
                     print(consultaProfissionalNome(nomeBuscaProf))
-                elif escolhaBuscaProf == "2"
+                elif escolhaBuscaProf == "2":
                     cpfBuscaProf = input("Digite o CPF do profissional que deseja buscar: \n")
                     print(consultaProfissionaCPF(cpfBuscaProf))
-                elif escolhaBuscaProf == "3"
+                elif escolhaBuscaProf == "3":
                     idBuscaProf = input("Digite a id do profissional que deseja buscar: \n")
                     print(consultaProfissionaCodigo(idBuscaProf))
-                elif escolhaBuscaProf == "4"
+                elif escolhaBuscaProf == "4":
                     tagBusca = input("Digite a tag que deseja buscar: \n")
                     print(pesquisaProfissionalTag(tagBusca))
                 else:
-                print('Opção inválida')
+                    print('Opção inválida')
 
     elif opcao == "4":
         appInit = False
