@@ -28,7 +28,7 @@ def insereJob(cliente, titulo, descricao): # INSERE UMA ENTRADA NA TABELA JOB
 
 def insereProfissional(cpf, nome, email, telefone): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
     
-    comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}", "{endereco}")'
+    comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}")'
     cursor.execute(comando)
     conexao.commit()
 
@@ -170,7 +170,27 @@ def cadastrarUsuario():
     email = input("Informe o email do cliente:")
     telefone = input("Informe o telefone do cliente:")
     insereCliente(nome,cpf,email,telefone)
+    rua = input("Digite o numero da rua: \n")
+    numero = input("Insira o numero: \n")
+    complemento = input("Insira o complemento: \n")
+    cep = input("Insira o cep: \n")
+    insereEndereco(rua, numero, complemento, cep)
     print("Cliente cadastrado com sucesso!")
+    
+    
+def cadastrarPrestador():
+    
+    cpf = input("Digite o CPF do profissional: \n")
+    nome = input("Digite o nome do profissional: \n ")
+    email = input("Digite o email do profissional: \n")
+    telefone = input("Digite o telefone do profissional: \n")
+    insereProfissional(cpf, nome, email, telefone)
+    rua = input("Digite o numero da rua: \n")
+    numero = input("Insira o numero: \n")
+    complemento = input("Insira o complemento: \n")
+    cep = input("Insira o cep: \n")
+    insereEndereco(rua, numero, complemento, cep)
+    print("Profissional cadastrado com sucesso!")
 
 
 
@@ -181,18 +201,26 @@ while(appInit):
 
     print("Selecione uma das opções: ")
     print("0 - Criar estrutura")
-    print("1 - Cadastrar Cliente")
-    print("2 - Pesquisar Cliente")
-    print("3 - Sair")
+    print("1 - Cadastrar")
+    print("2 - Pesquisar")
+    print("3 - Configurações")
+    print("4 - Sair")
 
     opcao = input("Digite o numero correspondente")
 
     if opcao == "0":
-        #ConectorSQL.criarTabela(conexao)
-        pesquisaProfissionalTag('professor')
+        manipulaBD.criarTabela(conexao)
 
     elif opcao == "1":
-        cadastrarUsuario()
+        print("1 - Cadastrar cliente")
+        print("2 - Cadastrar prestador")
+
+        escolhaCadastro = input("Digite a opção desejada")
+
+        if escolhaCadastro == "1":
+            cadastrarUsuario()
+        elif escolhaCadastro == "2":
+            cadastrarPrestador()
 
     elif opcao == "2":
 
@@ -206,11 +234,11 @@ while(appInit):
             print(consultaClienteNome(nomeBusca))
         elif escolhaBusca == "2":
             idBusca = input("Digite a id do cliente que deseja buscar: ")
-            print(consultaClienteCodigo(idBusca))
+            print(consultaClienteId(idBusca))
         else:
             print('Opção inválida')
         
-    elif opcao == "3":
+    elif opcao == "4":
         appInit = False
         print("adiós")
     
