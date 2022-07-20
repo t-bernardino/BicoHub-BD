@@ -206,7 +206,7 @@ while(appInit):
     print("3 - Configurações")
     print("4 - Sair")
 
-    opcao = input("Digite o numero correspondente")
+    opcao = input("Digite o numero correspondente \n")
 
     if opcao == "0":
         ConectorSQL.criarTabela(conexao)
@@ -215,7 +215,7 @@ while(appInit):
         print("1 - Cadastrar cliente")
         print("2 - Cadastrar prestador")
 
-        escolhaCadastro = input("Digite a opção desejada")
+        escolhaCadastro = input("Digite a opção desejada \n")
 
         if escolhaCadastro == "1":
             cadastrarUsuario()
@@ -224,23 +224,24 @@ while(appInit):
 
     elif opcao == "2":
 
-        print("1 - Pesquisar por nome")
-        print("2 - Pesquisar por código")
+        print("1 - Pesquisar por nome do cliente")
+        print("2 - Pesquisar por ID do cliente")
+        print("3 - Pesquisar 
 
-        escolhaBusca = input("Digite a opção desejada:")
+        escolhaBusca = input("Digite a opção desejada: \n")
 
         if escolhaBusca == "1":
-            nomeBusca = input("Digite o nome do cliente que deseja buscar: ")
+            nomeBusca = input("Digite o nome do cliente que deseja buscar: \n")
             print(consultaClienteNome(nomeBusca))
         elif escolhaBusca == "2":
-            idBusca = input("Digite a id do cliente que deseja buscar: ")
+            idBusca = input("Digite a id do cliente que deseja buscar: \n")
             print(consultaClienteCodigo(idBusca))
         else:
             print('Opção inválida')
         
     elif opcao == "4":
         appInit = False
-        print("adiós")
+        print("Obrigado por usar a aplicação!")
     
     else:
         print("Opcao Inválida!")
