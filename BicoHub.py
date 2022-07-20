@@ -132,6 +132,21 @@ def consultaProfissionaCodigo(codigo): # CONSULTA E RETORNA UM PROFISSIONAL PELO
     query = f'SELECT * FROM profissional WHERE id_profissional = {codigo}'
     return consulta(query)
 
+def retornaIdCliente(nome):
+
+    query = "SELECT Id_cliente FROM cliente WHERE nome_cliente  LIKE '%"+nome+"%'"
+    return consulta(query)
+
+def mostraJobsClientes(nome):
+
+    query = "SELECT cliente.Id_cliente, cliente.nome_cliente, job.titulo_job FROM (job INNER JOIN cliente ON job.id_cliente = cliente.Id_cliente) WHERE cliente.nome_cliente LIKE '%"+nome+"%'"
+    print(consulta(query))
+
+def pesquisaProfissionalTag(servico):
+
+    query = "SELECT profissional.nome_profissional, tag_de_servico.titulo_tag FROM ((profissional INNER JOIN serviço_profissional ON profissional.id_profissional = serviço_profissional.id_profissional) INNER JOIN tag_de_servico ON serviço_profissional.id_tag_de_servico = tag_de_servico.id_tag_de_servico) WHERE tag_de_servico.titulo_tag LIKE '%"+servico+"%'"
+    print(consulta(query))
+
 
 
 
@@ -174,7 +189,7 @@ while(appInit):
 
     if opcao == "0":
         #ConectorSQL.criarTabela(conexao)
-        consultaClienteNome("Kelvin")
+        pesquisaProfissionalTag('professor')
 
     elif opcao == "1":
         cadastrarUsuario()
