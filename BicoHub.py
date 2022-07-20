@@ -251,7 +251,7 @@ while(appInit):
             elif escolhaBusca == "4":
                 idNomeBusca = input("Digite o nome do Cliente que deseja buscar o ID: \n")
                 print(idNomeBusca(retornaIdCliente))
-            elif escolhaBusca == "5"
+            elif escolhaBusca == "5":
                 jobBusca = input("Digite o nome do cliente para o qual o job está relacionado: \n")
                 print(jobBusca(mostraJobsClientes))
             else:
@@ -265,20 +265,20 @@ while(appInit):
                 
                 escolhaBuscaProf = input("Digite a opção desejada:\n")
                 
-                if escolhaBuscaProf == "1"
+                if escolhaBuscaProf == "1":
                     nomeBuscaProf = input("Digite o nome do profissional que deseja buscar: \n")
                     print(consultaProfissionalNome(nomeBuscaProf))
-                elif escolhaBuscaProf == "2"
+                elif escolhaBuscaProf == "2":
                     cpfBuscaProf = input("Digite o CPF do profissional que deseja buscar: \n")
                     print(consultaProfissionaCPF(cpfBuscaProf))
-                elif escolhaBuscaProf == "3"
+                elif escolhaBuscaProf == "3":
                     idBuscaProf = input("Digite a id do profissional que deseja buscar: \n")
                     print(consultaProfissionaCodigo(idBuscaProf))
-                elif escolhaBuscaProf == "4"
+                elif escolhaBuscaProf == "4":
                     tagBusca = input("Digite a tag que deseja buscar: \n")
                     print(pesquisaProfissionalTag(tagBusca))
                 else:
-                print('Opção inválida')
+                    print('Opção inválida')
 
     elif opcao == "4":
         appInit = False
