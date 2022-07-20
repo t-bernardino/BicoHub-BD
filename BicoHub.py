@@ -1,6 +1,6 @@
-import manipulaBD
+from manipulaBD import ConectorSQL
 
-conexao = manipulaBD.criaConexaoBD('localhost','kaueVB','kaueVB','sys')
+conexao = ConectorSQL.criaConexaoBD()
 cursor = conexao.cursor()
 
 def insereCliente(nome, cpf, email, telefone): # INSERE UMA ENTRADA NA TABELA CLIENTE
@@ -26,7 +26,7 @@ def insereJob(cliente, titulo, descricao): # INSERE UMA ENTRADA NA TABELA JOB
 
 
 
-def insereProfissional(cpf, nome, email, telefone, endereco): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
+def insereProfissional(cpf, nome, email, telefone): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
     
     comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}", "{endereco}")'
     cursor.execute(comando)
@@ -68,24 +68,85 @@ def insereTagServico(titulo, descricao): #INSERE UMA ENTRADA NA TABELA TAG_SERVI
 def leTodosClientes(): #LE E RETORNA TODOS OS CLIENTES DO BANCO
     lista_bd = []
     consulta = """SELECT * FROM cliente;"""
-    resultados = manipulaBD.leConsulta(conexao, consulta)
+    resultados = ConectorSQL.leConsulta(conexao, consulta)
 
     for resultado in resultados:
         lista_bd.append(resultado)
     
     print(lista_bd)
 
-def consultaClienteNome(nome): # CONSULTA E RETORNA UM CLIENTE PELO NOME
+def consulta(query): # CONSULTA E RETORNA UM CLIENTE PELO NOME
 
-    consulta = f'SELECT * FROM cliente WHERE nome_cliente = "{nome}"'
-    resultados = manipulaBD.leConsulta(conexao, consulta)
+    #consulta = f'{query}'
+    resultados = ConectorSQL.leConsulta(conexao, query)
     return resultados
 
+    """
+    widths = []
+    columns = []
+    tavnit = '|'
+    separator = '+' 
+    for cd in cursor.description:
+        widths.append(max(columnnm(cd[0]), len(cd[0])))
+        columns.append(cd[0])
+
+    for w in widths:
+        tavnit += " %-"+"%ss |" % (w,)
+        separator += '-'*w + '--+'
+
+    print(separator)
+    print(tavnit % tuple(columns))
+    print(separator)
+    for row in resultados:
+        print(tavnit % row)
+    print(separator)
+    """
+
+def consultaClienteNome(nome): # CONSULTA E RETORNA UM CLIENTE PELO NOME
+
+    query = "SELECT * FROM cliente WHERE nome_cliente LIKE '%"+nome+"%'"
+    print(consulta(query))
+
+def consultaClienteCPF(cpf): # CONSULTA E RETORNA UM CLIENTE PELO CPF
+
+    query = "SELECT * FROM cliente WHERE cpf_cliente LIKE '%"+cpf+"%'"
+    return consulta(query)
+
+def consultaClienteCodigo(codigo): # CONSULTA E RETORNA UM CLIENTE PELO CÓDIGO
+
+    query = f'SELECT * FROM cliente WHERE Id_cliente = {codigo}'
+    return consulta(query)
+
+def consultaProfissionalNome(nome): # CONSULTA E RETORNA UM PROFISSIONAL PELO NOME
+
+    query = "SELECT * FROM profissional WHERE nome_profissional LIKE '%"+nome+"%'"
+    return consulta(query)
+
+def consultaProfissionaCPF(cpf): # CONSULTA E RETORNA UM PROFISSIONAL PELO CPF
+
+    query = "SELECT * FROM profissional WHERE cpf_profissional LIKE '%"+cpf+"%'"
+    return consulta(query)
+
+def consultaProfissionaCodigo(codigo): # CONSULTA E RETORNA UM PROFISSIONAL PELO CÓDIGO
+
+    query = f'SELECT * FROM profissional WHERE id_profissional = {codigo}'
+    return consulta(query)
+
+
+
+
+def selecionaEndereco(rua,numero,complemento,cep):
+
+    query = "SELECT id_endereco FROM endereco WHERE rua='"+{rua}+"' and numero="+{numero}+" and complemento="+{complemento}+" and cep="+{cep}
+    return consulta(query)
+
+"""
 def consultaClienteId(id): #CONSULTA E RETORNA UM CLIENTE PELA ID
 
     consulta = f'SELECT * FROM cliente WHERE Id_cliente = {id}'
     resultados = manipulaBD.leConsulta(conexao, consulta)
     return resultados
+"""
 
 def cadastrarUsuario():
 
@@ -112,7 +173,8 @@ while(appInit):
     opcao = input("Digite o numero correspondente")
 
     if opcao == "0":
-        manipulaBD.criarTabela(conexao)
+        #ConectorSQL.criarTabela(conexao)
+        consultaClienteNome("Kelvin")
 
     elif opcao == "1":
         cadastrarUsuario()
@@ -129,7 +191,7 @@ while(appInit):
             print(consultaClienteNome(nomeBusca))
         elif escolhaBusca == "2":
             idBusca = input("Digite a id do cliente que deseja buscar: ")
-            print(consultaClienteId(idBusca))
+            print(consultaClienteCodigo(idBusca))
         else:
             print('Opção inválida')
         
