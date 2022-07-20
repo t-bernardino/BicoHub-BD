@@ -223,22 +223,63 @@ while(appInit):
             cadastrarPrestador()
 
     elif opcao == "2":
-
-        print("1 - Pesquisar por nome do cliente")
-        print("2 - Pesquisar por ID do cliente")
-        print("3 - Pesquisar 
-
-        escolhaBusca = input("Digite a opção desejada: \n")
-
-        if escolhaBusca == "1":
-            nomeBusca = input("Digite o nome do cliente que deseja buscar: \n")
-            print(consultaClienteNome(nomeBusca))
-        elif escolhaBusca == "2":
-            idBusca = input("Digite a id do cliente que deseja buscar: \n")
-            print(consultaClienteCodigo(idBusca))
-        else:
-            print('Opção inválida')
         
+        
+        print("1 - Pesquisar por dados do cliente")
+        print("2 - Pesquisar por dados do prestador")
+        
+        escolhaPesquisa = input("Digite a opção desejada: \n")
+        
+        if escolhaPesquisa == "1":
+            print("1 - Pesquisar cliente por nome")
+            print("2 - Pesquisar cliente por ID")
+            print("3 - Pesquisar cliente por CPF")
+            print("4 - Pesquisar ID por nome do cliente")
+            print("5 - Pesquisar Jobs relacionados ao nome do cliente")
+
+            escolhaBusca = input("Digite a opção desejada: \n")
+
+            if escolhaBusca == "1":
+                nomeBusca = input("Digite o nome do cliente que deseja buscar: \n")
+                print(consultaClienteNome(nomeBusca))
+            elif escolhaBusca == "2":
+                idBusca = input("Digite a id do cliente que deseja buscar: \n")
+                print(consultaClienteCodigo(idBusca))
+            elif escolhaBusca == "3":
+                cpfBusca = input("Digite o CPF do cliente que deseja buscar: \n")
+                print(consultaClienteCPF(cpfBusca))
+            elif escolhaBusca == "4":
+                idNomeBusca = input("Digite o nome do Cliente que deseja buscar o ID: \n")
+                print(idNomeBusca(retornaIdCliente))
+            elif escolhaBusca == "5"
+                jobBusca = input("Digite o nome do cliente para o qual o job está relacionado: \n")
+                print(jobBusca(mostraJobsClientes))
+            else:
+                print('Opção inválida')
+                
+            if escolhaPesquisa == "2":
+                print("1 - Pesquisar profissional por nome")
+                print("2 - Pesquisar profissional por CPF")
+                print("3 - Pesquisar profissional por ID")
+                print("4 - Pesquisar profissionais relacionados a uma tag especifica")
+                
+                escolhaBuscaProf = input("Digite a opção desejada:\n")
+                
+                if escolhaBuscaProf == "1"
+                    nomeBuscaProf = input("Digite o nome do profissional que deseja buscar: \n")
+                    print(consultaProfissionalNome(nomeBuscaProf))
+                elif escolhaBuscaProf == "2"
+                    cpfBuscaProf = input("Digite o CPF do profissional que deseja buscar: \n")
+                    print(consultaProfissionaCPF(cpfBuscaProf))
+                elif escolhaBuscaProf == "3"
+                    idBuscaProf = input("Digite a id do profissional que deseja buscar: \n")
+                    print(consultaProfissionaCodigo(idBuscaProf))
+                elif escolhaBuscaProf == "4"
+                    tagBusca = input("Digite a tag que deseja buscar: \n")
+                    print(pesquisaProfissionalTag(tagBusca))
+                else:
+                print('Opção inválida')
+
     elif opcao == "4":
         appInit = False
         print("Obrigado por usar a aplicação!")
