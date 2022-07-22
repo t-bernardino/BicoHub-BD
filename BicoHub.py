@@ -1,6 +1,6 @@
-import manipulaBD
+from manipulaBD import ConectorSQL
 
-conexao = manipulaBD.criaConexaoBD('localhost','kaueVB','kaueVB','sys')
+conexao = ConectorSQL.criaConexaoBD()
 cursor = conexao.cursor()
 
 def insereCliente(nome, cpf, email, telefone): # INSERE UMA ENTRADA NA TABELA CLIENTE
@@ -26,9 +26,9 @@ def insereJob(cliente, titulo, descricao): # INSERE UMA ENTRADA NA TABELA JOB
 
 
 
-def insereProfissional(cpf, nome, email, telefone, endereco): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
+def insereProfissional(cpf, nome, email, telefone, id_endereco): # INSERE UMA ENTRADA NA TABELA PROFISSIONAL
     
-    comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}", "{endereco}")'
+    comando = f'INSERT INTO profissional (cpf_profissional, nome_profissional, email_profissional, telefone_prof) VALUES ("{cpf}", "{nome}", "{email}", "{telefone}", "{id_endereco}")'
     cursor.execute(comando)
     conexao.commit()
 
@@ -68,24 +68,102 @@ def insereTagServico(titulo, descricao): #INSERE UMA ENTRADA NA TABELA TAG_SERVI
 def leTodosClientes(): #LE E RETORNA TODOS OS CLIENTES DO BANCO
     lista_bd = []
     consulta = """SELECT * FROM cliente;"""
-    resultados = manipulaBD.leConsulta(conexao, consulta)
+    resultados = ConectorSQL.leConsulta(conexao, consulta)
 
     for resultado in resultados:
         lista_bd.append(resultado)
     
     print(lista_bd)
 
-def consultaClienteNome(nome): # CONSULTA E RETORNA UM CLIENTE PELO NOME
+def consulta(query): # CONSULTA E RETORNA UM CLIENTE PELO NOME
 
-    consulta = f'SELECT * FROM cliente WHERE nome_cliente = "{nome}"'
-    resultados = manipulaBD.leConsulta(conexao, consulta)
+    #consulta = f'{query}'
+    resultados = ConectorSQL.leConsulta(conexao, query)
     return resultados
 
+    """
+    widths = []
+    columns = []
+    tavnit = '|'
+    separator = '+' 
+    for cd in cursor.description:
+        widths.append(max(columnnm(cd[0]), len(cd[0])))
+        columns.append(cd[0])
+
+    for w in widths:
+        tavnit += " %-"+"%ss |" % (w,)
+        separator += '-'*w + '--+'
+
+    print(separator)
+    print(tavnit % tuple(columns))
+    print(separator)
+    for row in resultados:
+        print(tavnit % row)
+    print(separator)
+    """
+
+def consultaClienteNome(nome): # CONSULTA E RETORNA UM CLIENTE PELO NOME
+
+    query = "SELECT * FROM cliente WHERE nome_cliente LIKE '%"+nome+"%'"
+    print(consulta(query))
+
+def consultaClienteCPF(cpf): # CONSULTA E RETORNA UM CLIENTE PELO CPF
+
+    query = "SELECT * FROM cliente WHERE cpf_cliente LIKE '%"+cpf+"%'"
+    return consulta(query)
+
+def consultaClienteCodigo(codigo): # CONSULTA E RETORNA UM CLIENTE PELO CÓDIGO
+
+    query = f'SELECT * FROM cliente WHERE Id_cliente = {codigo}'
+    return consulta(query)
+
+def consultaProfissionalNome(nome): # CONSULTA E RETORNA UM PROFISSIONAL PELO NOME
+
+    query = "SELECT * FROM profissional WHERE nome_profissional LIKE '%"+nome+"%'"
+    return consulta(query)
+
+def consultaProfissionaCPF(cpf): # CONSULTA E RETORNA UM PROFISSIONAL PELO CPF
+
+    query = "SELECT * FROM profissional WHERE cpf_profissional LIKE '%"+cpf+"%'"
+    return consulta(query)
+
+def consultaProfissionaCodigo(codigo): # CONSULTA E RETORNA UM PROFISSIONAL PELO CÓDIGO
+
+    query = f'SELECT * FROM profissional WHERE id_profissional = {codigo}'
+    return consulta(query)
+
+def retornaIdCliente(nome):
+
+    query = "SELECT Id_cliente FROM cliente WHERE nome_cliente  LIKE '%"+nome+"%'"
+    return consulta(query)
+
+def mostraJobsClientes(nome):
+
+    query = "SELECT cliente.Id_cliente, cliente.nome_cliente, job.titulo_job FROM (job INNER JOIN cliente ON job.id_cliente = cliente.Id_cliente) WHERE cliente.nome_cliente LIKE '%"+nome+"%'"
+    print(consulta(query))
+
+def pesquisaProfissionalTag(servico):
+
+    query = "SELECT profissional.nome_profissional, tag_de_servico.titulo_tag FROM ((profissional INNER JOIN serviço_profissional ON profissional.id_profissional = serviço_profissional.id_profissional) INNER JOIN tag_de_servico ON serviço_profissional.id_tag_de_servico = tag_de_servico.id_tag_de_servico) WHERE tag_de_servico.titulo_tag LIKE '%"+servico+"%'"
+    print(consulta(query))
+
+
+
+
+def selecionaEndereco(rua,numero,complemento,cep):
+
+    numeroConv = str(numero)
+
+    query = "SELECT id_endereco FROM endereço WHERE rua='"+{rua}+"' and numero={numero} and complemento='"+{complemento}+"' and cep='"+{cep}+"'"
+    return consulta(query)
+
+"""
 def consultaClienteId(id): #CONSULTA E RETORNA UM CLIENTE PELA ID
 
     consulta = f'SELECT * FROM cliente WHERE Id_cliente = {id}'
     resultados = manipulaBD.leConsulta(conexao, consulta)
     return resultados
+"""
 
 def cadastrarUsuario():
 
@@ -94,7 +172,28 @@ def cadastrarUsuario():
     email = input("Informe o email do cliente:")
     telefone = input("Informe o telefone do cliente:")
     insereCliente(nome,cpf,email,telefone)
+    rua = input("Digite o nome da rua: \n")
+    numero = input("Insira o numero: \n")
+    complemento = input("Insira o complemento: \n")
+    cep = input("Insira o cep: \n")
+    insereEndereco(rua, numero, complemento, cep)
     print("Cliente cadastrado com sucesso!")
+    
+    
+def cadastrarPrestador():
+    
+    cpf = input("Digite o CPF do profissional: \n")
+    nome = input("Digite o nome do profissional: \n ")
+    email = input("Digite o email do profissional: \n")
+    telefone = input("Digite o telefone do profissional: \n")
+    rua = input("Digite o nome da rua: \n")
+    numero = input("Insira o numero: \n")
+    complemento = input("Insira o complemento: \n")
+    cep = input("Insira o cep: \n")
+    insereEndereco(rua, numero, complemento, cep)
+    id_endereco = selecionaEndereco(rua, numero, complemento, cep)
+    insereProfissional(cpf, nome, email, telefone, id_endereco)
+    print("Profissional cadastrado com sucesso!")
 
 
 
@@ -105,37 +204,88 @@ while(appInit):
 
     print("Selecione uma das opções: ")
     print("0 - Criar estrutura")
-    print("1 - Cadastrar Cliente")
-    print("2 - Pesquisar Cliente")
-    print("3 - Sair")
+    print("1 - Cadastrar")
+    print("2 - Pesquisar")
+    print("3 - Configurações")
+    print("4 - Sair")
 
-    opcao = input("Digite o numero correspondente")
+    opcao = input("Digite o numero correspondente \n")
 
     if opcao == "0":
-        manipulaBD.criarTabela(conexao)
+        ConectorSQL.criarTabela(conexao)
 
     elif opcao == "1":
-        cadastrarUsuario()
+        print("1 - Cadastrar cliente")
+        print("2 - Cadastrar prestador")
+
+        escolhaCadastro = input("Digite a opção desejada \n")
+
+        if escolhaCadastro == "1":
+            cadastrarUsuario()
+        elif escolhaCadastro == "2":
+            cadastrarPrestador()
 
     elif opcao == "2":
-
-        print("1 - Pesquisar por nome")
-        print("2 - Pesquisar por código")
-
-        escolhaBusca = input("Digite a opção desejada:")
-
-        if escolhaBusca == "1":
-            nomeBusca = input("Digite o nome do cliente que deseja buscar: ")
-            print(consultaClienteNome(nomeBusca))
-        elif escolhaBusca == "2":
-            idBusca = input("Digite a id do cliente que deseja buscar: ")
-            print(consultaClienteId(idBusca))
-        else:
-            print('Opção inválida')
         
-    elif opcao == "3":
+        
+        print("1 - Pesquisar por dados do cliente")
+        print("2 - Pesquisar por dados do prestador")
+        
+        escolhaPesquisa = input("Digite a opção desejada: \n")
+        
+        if escolhaPesquisa == "1":
+            print("1 - Pesquisar cliente por nome")
+            print("2 - Pesquisar cliente por ID")
+            print("3 - Pesquisar cliente por CPF")
+            print("4 - Pesquisar ID por nome do cliente")
+            print("5 - Pesquisar Jobs relacionados ao nome do cliente")
+
+            escolhaBusca = input("Digite a opção desejada: \n")
+
+            if escolhaBusca == "1":
+                nomeBusca = input("Digite o nome do cliente que deseja buscar: \n")
+                print(consultaClienteNome(nomeBusca))
+            elif escolhaBusca == "2":
+                idBusca = input("Digite a id do cliente que deseja buscar: \n")
+                print(consultaClienteCodigo(idBusca))
+            elif escolhaBusca == "3":
+                cpfBusca = input("Digite o CPF do cliente que deseja buscar: \n")
+                print(consultaClienteCPF(cpfBusca))
+            elif escolhaBusca == "4":
+                idNomeBusca = input("Digite o nome do Cliente que deseja buscar o ID: \n")
+                print(idNomeBusca(retornaIdCliente))
+            elif escolhaBusca == "5":
+                jobBusca = input("Digite o nome do cliente para o qual o job está relacionado: \n")
+                print(jobBusca(mostraJobsClientes))
+            else:
+                print('Opção inválida')
+                
+            if escolhaPesquisa == "2":
+                print("1 - Pesquisar profissional por nome")
+                print("2 - Pesquisar profissional por CPF")
+                print("3 - Pesquisar profissional por ID")
+                print("4 - Pesquisar profissionais relacionados a uma tag especifica")
+                
+                escolhaBuscaProf = input("Digite a opção desejada:\n")
+                
+                if escolhaBuscaProf == "1":
+                    nomeBuscaProf = input("Digite o nome do profissional que deseja buscar: \n")
+                    print(consultaProfissionalNome(nomeBuscaProf))
+                elif escolhaBuscaProf == "2":
+                    cpfBuscaProf = input("Digite o CPF do profissional que deseja buscar: \n")
+                    print(consultaProfissionaCPF(cpfBuscaProf))
+                elif escolhaBuscaProf == "3":
+                    idBuscaProf = input("Digite a id do profissional que deseja buscar: \n")
+                    print(consultaProfissionaCodigo(idBuscaProf))
+                elif escolhaBuscaProf == "4":
+                    tagBusca = input("Digite a tag que deseja buscar: \n")
+                    print(pesquisaProfissionalTag(tagBusca))
+                else:
+                    print('Opção inválida')
+
+    elif opcao == "4":
         appInit = False
-        print("adiós")
+        print("Obrigado por usar a aplicação!")
     
     else:
         print("Opcao Inválida!")
